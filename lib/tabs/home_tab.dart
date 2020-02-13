@@ -12,7 +12,7 @@ class HomeTab extends StatelessWidget {
         CustomScrollView(
           slivers: <Widget>[
             SliverAppBar(
-              floating: true,
+              floating: false,
               backgroundColor: Color.fromARGB(255, 211, 118, 130),
               elevation: 8,
               flexibleSpace: FlexibleSpaceBar(
@@ -37,7 +37,6 @@ class HomeTab extends StatelessWidget {
                     ),
                   );
                 } else {
-                  print(snapshot.data.documents.length);
                   return SliverStaggeredGrid.count(
                     crossAxisCount: 2,
                     mainAxisSpacing: 1,
