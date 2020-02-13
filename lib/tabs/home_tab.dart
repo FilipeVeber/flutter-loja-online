@@ -1,5 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
+import 'package:transparent_image/transparent_image.dart';
 
 class HomeTab extends StatelessWidget {
   @override
@@ -11,9 +13,8 @@ class HomeTab extends StatelessWidget {
           slivers: <Widget>[
             SliverAppBar(
               floating: true,
-              snap: true,
-              backgroundColor: Colors.transparent,
-              elevation: 0,
+              backgroundColor: Color.fromARGB(255, 211, 118, 130),
+              elevation: 8,
               flexibleSpace: FlexibleSpaceBar(
                 title: const Text("Novidades"),
                 centerTitle: true,
@@ -37,14 +38,21 @@ class HomeTab extends StatelessWidget {
                   );
                 } else {
                   print(snapshot.data.documents.length);
-                  return SliverToBoxAdapter(
-                    child: Container(
-                      width: 200,
-                      alignment: Alignment.center,
-                      child: CircularProgressIndicator(
-                        valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
-                      ),
-                    ),
+                  return SliverStaggeredGrid.count(
+                    crossAxisCount: 2,
+                    mainAxisSpacing: 1,
+                    crossAxisSpacing: 1,
+                    staggeredTiles: snapshot.data.documents.map((doc) {
+                      return StaggeredTile.count(
+                          doc.data["width"], doc.data["height"]);
+                    }).toList(),
+                    children: snapshot.data.documents.map((doc) {
+                      return FadeInImage.memoryNetwork(
+                        placeholder: kTransparentImage,
+                        image: doc.data["URL"],
+                        fit: BoxFit.cover,
+                      );
+                    }).toList(),
                   );
                 }
               },
@@ -60,6 +68,6 @@ class HomeTab extends StatelessWidget {
             gradient: LinearGradient(colors: [
           Color.fromARGB(255, 211, 118, 130),
           Color.fromARGB(255, 253, 181, 168),
-        ], begin: Alignment.topLeft, end: Alignment.bottomRight)),
+        ], begin: Alignment.topCenter, end: Alignment.bottomCenter)),
       );
 }
