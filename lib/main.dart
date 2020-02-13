@@ -1,11 +1,14 @@
 import 'package:flutter/material.dart';
 
+import 'UI/home_screen.dart';
+
 void main() {
   runApp(MaterialApp(
-    theme: ThemeData(primarySwatch: Colors.blue),
+    debugShowCheckedModeBanner: false,
+    theme: ThemeData(
+        primarySwatch: Colors.blue,
+        primaryColor: Color.fromARGB(255, 4, 125, 141)),
     title: "Loja virtual",
-    home: Container(
-      color: Colors.green,
-    ),
+    home: HomeScreen(),
   ));
 }
