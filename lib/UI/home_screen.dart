@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_loja_online/tabs/category_tab.dart';
 import 'package:flutter_loja_online/tabs/home_tab.dart';
 import 'package:flutter_loja_online/widgets/custom_drawer.dart';
 
@@ -12,8 +13,13 @@ class HomeScreen extends StatelessWidget {
       physics: NeverScrollableScrollPhysics(),
       children: <Widget>[
         Scaffold(drawer: CustomDrawer(_pageController), body: HomeTab()),
-        Container(
-          color: Colors.red,
+        Scaffold(
+          appBar: AppBar(
+            title: Text("Categorias"),
+            centerTitle: true,
+          ),
+          drawer: CustomDrawer(_pageController),
+          body: CategoryTab(),
         ),
         Container(
           color: Colors.green,
