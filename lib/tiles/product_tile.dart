@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_loja_online/UI/product_screen.dart';
 import 'package:flutter_loja_online/datas/product_data.dart';
 
 class ProductTile extends StatelessWidget {
@@ -80,6 +81,10 @@ class ProductTile extends StatelessWidget {
                 ],
               ),
       ),
+      onTap: () {
+        Navigator.of(context).push(MaterialPageRoute(
+            builder: (context) => ProductScreen(_productData)));
+      },
     );
   }
 }
