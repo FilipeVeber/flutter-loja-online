@@ -16,6 +16,8 @@ class _ProductScreenState extends State<ProductScreen> {
 
   _ProductScreenState(this._product);
 
+  String _selectedSize;
+
   @override
   Widget build(BuildContext context) {
     final Color _primaryColor = Theme.of(context).primaryColor;
@@ -54,6 +56,47 @@ class _ProductScreenState extends State<ProductScreen> {
                       fontSize: 22,
                       fontWeight: FontWeight.bold,
                       color: _primaryColor),
+                ),
+                SizedBox(
+                  height: 16,
+                ),
+                Text(
+                  "Tamanho",
+                  style: TextStyle(fontSize: 16, fontWeight: FontWeight.w500),
+                ),
+                SizedBox(
+                  height: 34,
+                  child: GridView(
+                    padding: EdgeInsets.symmetric(vertical: 4),
+                    scrollDirection: Axis.horizontal,
+                    gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                        crossAxisCount: 1,
+                        mainAxisSpacing: 8,
+                        childAspectRatio: 0.5),
+                    children: _product.sizes
+                        .map((size) => GestureDetector(
+                              child: Container(
+                                width: 50,
+                                alignment: Alignment.center,
+                                child: Text(size),
+                                decoration: BoxDecoration(
+                                    borderRadius:
+                                        BorderRadius.all(Radius.circular(4)),
+                                    border: Border.all(
+                                        color: size == _selectedSize
+                                            ? _primaryColor
+                                            : Colors.grey,
+                                        width: 2,
+                                        style: BorderStyle.solid)),
+                              ),
+                              onTap: () {
+                                setState(() {
+                                  _selectedSize = size;
+                                });
+                              },
+                            ))
+                        .toList(),
+                  ),
                 )
               ],
             ),

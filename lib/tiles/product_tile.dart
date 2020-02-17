@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_loja_online/UI/product_screen.dart';
 import 'package:flutter_loja_online/datas/product_data.dart';
