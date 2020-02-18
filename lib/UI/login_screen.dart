@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_loja_online/UI/signup_screen.dart';
 
 class LoginScreen extends StatelessWidget {
   final _formKey = GlobalKey<FormState>();
@@ -16,7 +17,10 @@ class LoginScreen extends StatelessWidget {
               style: TextStyle(fontSize: 15),
             ),
             textColor: Colors.white,
-            onPressed: () {},
+            onPressed: () {
+              Navigator.of(context).pushReplacement(
+                  MaterialPageRoute(builder: (context) => SignUpScreen()));
+            },
           )
         ],
       ),
