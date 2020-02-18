@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-
-import 'UI/home_screen.dart';
+import 'package:flutter_loja_online/UI/login_screen.dart';
 
 void main() {
   runApp(MaterialApp(
@@ -9,6 +8,6 @@ void main() {
         primarySwatch: Colors.blue,
         primaryColor: Color.fromARGB(255, 4, 125, 141)),
     title: "Loja virtual",
-    home: HomeScreen(),
+    home: LoginScreen(),
   ));
 }
