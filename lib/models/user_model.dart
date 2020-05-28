@@ -7,7 +7,7 @@ class UserModel extends Model {
   FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
   FirebaseUser _firebaseUser;
 
-  Map<String, dynamic> _userData = Map();
+  Map<String, dynamic> userData = Map();
 
   bool isLoading = false;
 
@@ -50,13 +50,23 @@ class UserModel extends Model {
 
   void recoverPassword() {}
 
-  bool isLoggedIn() {}
+  bool isLoggedIn() {
+    return _firebaseUser != null;
+  }
 
   Future<Null> _saveUserData(Map<String, dynamic> userData) async {
-    this._userData = userData;
+    this.userData = userData;
     await Firestore.instance
         .collection("users")
         .document(_firebaseUser.uid)
         .setData(userData);
+  }
+
+  void signOut() async {
+    await _firebaseAuth.signOut();
+    userData = Map();
+    _firebaseUser = null;
+
+    notifyListeners();
   }
 }

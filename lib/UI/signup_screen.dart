@@ -5,6 +5,7 @@ import '../models/user_model.dart';
 
 class SignUpScreen extends StatelessWidget {
   final _formKey = GlobalKey<FormState>();
+  final _scaffoldKey = GlobalKey<ScaffoldState>();
 
   final _nameController = TextEditingController();
   final _emailController = TextEditingController();
@@ -14,12 +15,14 @@ class SignUpScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      key: _scaffoldKey,
       appBar: AppBar(
         title: Text("Criar conta"),
         centerTitle: true,
       ),
       body: ScopedModelDescendant<UserModel>(
         builder: (context, child, userModel) {
+          print("userModel.isLoading ${userModel.isLoading}");
           if (userModel.isLoading) {
             return Center(child: CircularProgressIndicator());
           }
@@ -123,7 +126,22 @@ class SignUpScreen extends StatelessWidget {
     );
   }
 
-  void _onSuccess() {}
+  void _onSuccess() {
+    _scaffoldKey.currentState.showSnackBar(SnackBar(
+      content: Text("Usuário criado com sucesso!"),
+      backgroundColor: Theme.of(_scaffoldKey.currentContext).primaryColor,
+      duration: Duration(seconds: 3),
+    ));
 
-  void _onFail() {}
+    Future.delayed(Duration(seconds: 2))
+        .then((value) => Navigator.of(_scaffoldKey.currentContext).pop());
+  }
+
+  void _onFail() {
+    _scaffoldKey.currentState.showSnackBar(SnackBar(
+      content: Text("Falha ao criar o usuário!"),
+      backgroundColor: Theme.of(_scaffoldKey.currentContext).errorColor,
+      duration: Duration(seconds: 3),
+    ));
+  }
 }
