@@ -11,11 +11,37 @@ class UserModel extends Model {
 
   bool isLoading = false;
 
-  void signIn() async {
+  @override
+  void addListener(VoidCallback listener) {
+    super.addListener(listener);
+    _loadCurrentUser();
+  }
+
+  void signIn(
+      {@required String email,
+      @required String password,
+      @required VoidCallback onSuccess,
+      @required VoidCallback onFail}) async {
     isLoading = true;
     notifyListeners();
 
-    await Future.delayed(Duration(seconds: 3));
+    _firebaseAuth
+        .signInWithEmailAndPassword(email: email, password: password)
+        .then((authResult) async {
+      _firebaseUser = authResult.user;
+
+      await _loadCurrentUser();
+
+      onSuccess();
+
+      isLoading = false;
+      notifyListeners();
+    }).catchError((e) {
+      onFail();
+      isLoading = false;
+      notifyListeners();
+    });
+
     isLoading = false;
     notifyListeners();
   }
@@ -66,6 +92,24 @@ class UserModel extends Model {
     await _firebaseAuth.signOut();
     userData = Map();
     _firebaseUser = null;
+
+    notifyListeners();
+  }
+
+  Future _loadCurrentUser() async {
+    if (_firebaseUser == null) {
+      _firebaseUser = await _firebaseAuth.currentUser();
+    }
+
+    if (_firebaseUser != null) {
+      if (userData["name"] == null) {
+        DocumentSnapshot docUser = await Firestore.instance
+            .collection("users")
+            .document(_firebaseUser.uid)
+            .get();
+        userData = docUser.data;
+      }
+    }
 
     notifyListeners();
   }

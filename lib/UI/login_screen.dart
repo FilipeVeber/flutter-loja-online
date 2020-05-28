@@ -5,10 +5,15 @@ import 'package:scoped_model/scoped_model.dart';
 
 class LoginScreen extends StatelessWidget {
   final _formKey = GlobalKey<FormState>();
+  final _scaffoldKey = GlobalKey<ScaffoldState>();
+
+  final _emailController = TextEditingController();
+  final _passwordController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      key: _scaffoldKey,
       appBar: AppBar(
         title: Text("Entrar"),
         centerTitle: true,
@@ -39,18 +44,22 @@ class LoginScreen extends StatelessWidget {
                 padding: EdgeInsets.all(16),
                 children: <Widget>[
                   TextFormField(
+                    controller: _emailController,
                     decoration: InputDecoration(labelText: "E-mail"),
                     keyboardType: TextInputType.emailAddress,
                     validator: (text) {
                       if (text.isEmpty || !text.contains("@")) {
                         return "E-mail inválido";
                       }
+
+                      return null;
                     },
                   ),
                   SizedBox(
                     height: 16,
                   ),
                   TextFormField(
+                    controller: _passwordController,
                     decoration: InputDecoration(labelText: "Senha"),
                     keyboardType: TextInputType.visiblePassword,
                     obscureText: true,
@@ -58,6 +67,8 @@ class LoginScreen extends StatelessWidget {
                       if (text.isEmpty || text.length < 6) {
                         return "Senha inválida";
                       }
+
+                      return null;
                     },
                   ),
                   SizedBox(
@@ -89,7 +100,12 @@ class LoginScreen extends StatelessWidget {
                       onPressed: () {
                         if (_formKey.currentState.validate()) {}
 
-                        model.signIn();
+                        model.signIn(
+                          email: _emailController.text,
+                          password: _passwordController.text,
+                          onSuccess: _onSuccess,
+                          onFail: _onFail,
+                        );
                       },
                     ),
                   )
@@ -100,5 +116,17 @@ class LoginScreen extends StatelessWidget {
         },
       ),
     );
+  }
+
+  void _onSuccess() {
+    Navigator.of(_scaffoldKey.currentContext).pop();
+  }
+
+  void _onFail() {
+    _scaffoldKey.currentState.showSnackBar(SnackBar(
+      content: Text("Falha ao entrar!"),
+      backgroundColor: Theme.of(_scaffoldKey.currentContext).errorColor,
+      duration: Duration(seconds: 3),
+    ));
   }
 }
