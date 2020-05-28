@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_loja_online/UI/signup_screen.dart';
+import 'package:flutter_loja_online/models/user_model.dart';
+import 'package:scoped_model/scoped_model.dart';
 
 class LoginScreen extends StatelessWidget {
   final _formKey = GlobalKey<FormState>();
@@ -24,66 +26,78 @@ class LoginScreen extends StatelessWidget {
           )
         ],
       ),
-      body: Form(
-        key: _formKey,
-        child: ListView(
-          padding: EdgeInsets.all(16),
-          children: <Widget>[
-            TextFormField(
-              decoration: InputDecoration(labelText: "E-mail"),
-              keyboardType: TextInputType.emailAddress,
-              validator: (text) {
-                if (text.isEmpty || !text.contains("@")) {
-                  return "E-mail inválido";
-                }
-              },
-            ),
-            SizedBox(
-              height: 16,
-            ),
-            TextFormField(
-              decoration: InputDecoration(labelText: "Senha"),
-              keyboardType: TextInputType.visiblePassword,
-              obscureText: true,
-              validator: (text) {
-                if (text.isEmpty || text.length < 6) {
-                  return "Senha inválida";
-                }
-              },
-            ),
-            SizedBox(
-              height: 16,
-            ),
-            Align(
-              alignment: Alignment.centerRight,
-              child: FlatButton(
-                child: Text(
-                  "Esqueci minha senha",
-                  textAlign: TextAlign.right,
-                ),
-                padding: EdgeInsets.zero,
-                onPressed: () {},
+      body: ScopedModelDescendant<UserModel>(
+        builder: (context, child, model) {
+          if (model.isLoading) {
+            return Center(
+              child: CircularProgressIndicator(),
+            );
+          } else {
+            return Form(
+              key: _formKey,
+              child: ListView(
+                padding: EdgeInsets.all(16),
+                children: <Widget>[
+                  TextFormField(
+                    decoration: InputDecoration(labelText: "E-mail"),
+                    keyboardType: TextInputType.emailAddress,
+                    validator: (text) {
+                      if (text.isEmpty || !text.contains("@")) {
+                        return "E-mail inválido";
+                      }
+                    },
+                  ),
+                  SizedBox(
+                    height: 16,
+                  ),
+                  TextFormField(
+                    decoration: InputDecoration(labelText: "Senha"),
+                    keyboardType: TextInputType.visiblePassword,
+                    obscureText: true,
+                    validator: (text) {
+                      if (text.isEmpty || text.length < 6) {
+                        return "Senha inválida";
+                      }
+                    },
+                  ),
+                  SizedBox(
+                    height: 16,
+                  ),
+                  Align(
+                    alignment: Alignment.centerRight,
+                    child: FlatButton(
+                      child: Text(
+                        "Esqueci minha senha",
+                        textAlign: TextAlign.right,
+                      ),
+                      padding: EdgeInsets.zero,
+                      onPressed: () {},
+                    ),
+                  ),
+                  SizedBox(
+                    height: 16,
+                  ),
+                  SizedBox(
+                    height: 44,
+                    child: RaisedButton(
+                      child: Text(
+                        "Entrar",
+                        style: TextStyle(fontSize: 18),
+                      ),
+                      textColor: Colors.white,
+                      color: Theme.of(context).primaryColor,
+                      onPressed: () {
+                        if (_formKey.currentState.validate()) {}
+
+                        model.signIn();
+                      },
+                    ),
+                  )
+                ],
               ),
-            ),
-            SizedBox(
-              height: 16,
-            ),
-            SizedBox(
-              height: 44,
-              child: RaisedButton(
-                child: Text(
-                  "Entrar",
-                  style: TextStyle(fontSize: 18),
-                ),
-                textColor: Colors.white,
-                color: Theme.of(context).primaryColor,
-                onPressed: () {
-                  if (_formKey.currentState.validate()) {}
-                },
-              ),
-            )
-          ],
-        ),
+            );
+          }
+        },
       ),
     );
   }
