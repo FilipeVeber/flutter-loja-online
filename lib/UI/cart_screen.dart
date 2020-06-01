@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_loja_online/models/cart_model.dart';
 import 'package:flutter_loja_online/models/user_model.dart';
+import 'package:flutter_loja_online/tiles/cart_tile_product.dart';
 import 'package:scoped_model/scoped_model.dart';
 
 import 'login_screen.dart';
@@ -79,9 +80,17 @@ class CartScreen extends StatelessWidget {
                 style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
               ),
             );
+          } else {
+            return ListView(
+              children: <Widget>[
+                Column(
+                  children: cartModel.products.map((product) {
+                    CartTileProduct(product);
+                  }).toList(),
+                )
+              ],
+            );
           }
-
-          return Container();
         },
       ),
     );
