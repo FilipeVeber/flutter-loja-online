@@ -39,4 +39,6 @@ class CartModel extends Model {
 
     notifyListeners();
   }
+
+  bool isLoading = false;
 }
