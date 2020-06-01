@@ -1,6 +1,10 @@
 import 'package:carousel_pro/carousel_pro.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_loja_online/UI/login_screen.dart';
+import 'package:flutter_loja_online/datas/cart_product.dart';
 import 'package:flutter_loja_online/datas/product_data.dart';
+import 'package:flutter_loja_online/models/cart_model.dart';
+import 'package:flutter_loja_online/models/user_model.dart';
 
 class ProductScreen extends StatefulWidget {
   final ProductData _productData;
@@ -105,12 +109,30 @@ class _ProductScreenState extends State<ProductScreen> {
                   height: 44,
                   child: RaisedButton(
                     child: Text(
-                      "Adicionar ao carrinho",
+                      UserModel.of(context).isLoggedIn()
+                          ? "Adicionar ao carrinho"
+                          : "Entre para comprar",
                       style: TextStyle(fontSize: 18),
                     ),
                     color: _primaryColor,
                     textColor: Colors.white,
-                    onPressed: _selectedSize == null ? null : () {},
+                    onPressed: _selectedSize == null
+                        ? null
+                        : () {
+                            if (UserModel.of(context).isLoggedIn()) {
+                              CartProduct cartProduct = CartProduct();
+                              cartProduct.size = _selectedSize;
+                              cartProduct.quantity = 1;
+                              cartProduct.productId = _product.id;
+                              cartProduct.category = _product.categoryID;
+
+                              CartModel.of(context).addCartItem(cartProduct);
+                            } else {
+                              Navigator.of(context).push(MaterialPageRoute(
+                                  builder: (BuildContext context) =>
+                                      LoginScreen()));
+                            }
+                          },
                   ),
                 ),
                 SizedBox(

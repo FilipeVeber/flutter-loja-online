@@ -82,7 +82,18 @@ class LoginScreen extends StatelessWidget {
                         textAlign: TextAlign.right,
                       ),
                       padding: EdgeInsets.zero,
-                      onPressed: () {},
+                      onPressed: () {
+                        if (_emailController.text.isEmpty) {
+                          _showSnackBarMessage(
+                              message: "Insira seu e-mail para recuperação",
+                              backgroundColor: Theme.of(context).errorColor);
+                        } else {
+                          model.recoverPassword(_emailController.text);
+                          _showSnackBarMessage(
+                              message: "Um e-mail foi enviado para seu email!",
+                              backgroundColor: Theme.of(context).primaryColor);
+                        }
+                      },
                     ),
                   ),
                   SizedBox(
@@ -123,9 +134,16 @@ class LoginScreen extends StatelessWidget {
   }
 
   void _onFail() {
+    _showSnackBarMessage(
+        message: "Falha ao entrar!",
+        backgroundColor: Theme.of(_scaffoldKey.currentContext).errorColor);
+  }
+
+  void _showSnackBarMessage(
+      {@required String message, @required Color backgroundColor}) {
     _scaffoldKey.currentState.showSnackBar(SnackBar(
-      content: Text("Falha ao entrar!"),
-      backgroundColor: Theme.of(_scaffoldKey.currentContext).errorColor,
+      content: Text(message),
+      backgroundColor: backgroundColor,
       duration: Duration(seconds: 3),
     ));
   }
