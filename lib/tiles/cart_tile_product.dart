@@ -27,7 +27,7 @@ class CartTileProduct extends StatelessWidget {
                 if (snapshot.hasData) {
                   _cartProduct.productData =
                       ProductData.fromDocument(snapshot.data);
-                  return _buildContent();
+                  return _buildContent(context);
                 } else {
                   return Container(
                     height: 70,
@@ -37,11 +37,11 @@ class CartTileProduct extends StatelessWidget {
                 }
               },
             )
-          : _buildContent(),
+          : _buildContent(context),
     );
   }
 
-  Widget _buildContent() {
+  Widget _buildContent(BuildContext context) {
     return Row(
       children: <Widget>[
         Container(
@@ -76,7 +76,7 @@ class CartTileProduct extends StatelessWidget {
 //                      color: Theme.of(context).primaryColor,
                       onPressed: _cartProduct.quantity > 1
                           ? () {
-                              CartModel.of(cardKey.currentContext)
+                              CartModel.of(context)
                                   .decrementItemQuantity(_cartProduct);
                             }
                           : null,
@@ -84,9 +84,9 @@ class CartTileProduct extends StatelessWidget {
                     Text(_cartProduct.quantity.toString()),
                     IconButton(
                       icon: Icon(Icons.add),
-                      color: Theme.of(cardKey.currentContext).primaryColor,
+                      color: Theme.of(context).primaryColor,
                       onPressed: () {
-                        CartModel.of(cardKey.currentContext)
+                        CartModel.of(context)
                             .incrementItemQuantity(_cartProduct);
                       },
                     ),

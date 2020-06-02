@@ -77,7 +77,7 @@ class CartModel extends Model {
         .collection("users")
         .document(user.firebaseUser.uid)
         .collection("cart")
-        .document(cartProduct.productId)
+        .document(cartProduct.cartId)
         .updateData(cartProduct.toMap());
 
     notifyListeners();
