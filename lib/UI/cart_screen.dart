@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_loja_online/models/cart_model.dart';
 import 'package:flutter_loja_online/models/user_model.dart';
-import 'package:flutter_loja_online/tiles/cart_tile_product.dart';
+import 'package:flutter_loja_online/tiles/cart_product_tile.dart';
+import 'package:flutter_loja_online/widgets/cart_summary_card.dart';
 import 'package:flutter_loja_online/widgets/discount_card.dart';
 import 'package:flutter_loja_online/widgets/ship_card.dart';
 import 'package:scoped_model/scoped_model.dart';
@@ -93,6 +94,7 @@ class CartScreen extends StatelessWidget {
                 ),
                 DiscountCard(),
                 ShipCard(),
+                CartSummaryCard(() {}),
               ],
             );
           }

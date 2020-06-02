@@ -66,14 +66,16 @@ class CartTileProduct extends StatelessWidget {
                 Text("Tamanho: ${_cartProduct.size}",
                     style: TextStyle(fontWeight: FontWeight.w300)),
                 Text("R\$ ${_cartProduct.productData.price.toStringAsFixed(2)}",
-                    style:
-                        TextStyle(fontWeight: FontWeight.bold, fontSize: 16)),
+                    style: TextStyle(
+                        color: Theme.of(context).primaryColor,
+                        fontWeight: FontWeight.bold,
+                        fontSize: 16)),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: <Widget>[
                     IconButton(
                       icon: Icon(Icons.remove),
-//                      color: Theme.of(context).primaryColor,
+                      color: Theme.of(context).primaryColor,
                       onPressed: _cartProduct.quantity > 1
                           ? () {
                               CartModel.of(context)
