@@ -78,6 +78,7 @@ class CartScreen extends StatelessWidget {
               child: Text(
                 "Nenhum produto no carrinho",
                 style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                textAlign: TextAlign.center,
               ),
             );
           } else {
@@ -85,7 +86,7 @@ class CartScreen extends StatelessWidget {
               children: <Widget>[
                 Column(
                   children: cartModel.products.map((product) {
-                    CartTileProduct(product);
+                    return CartTileProduct(product);
                   }).toList(),
                 )
               ],
