@@ -4,11 +4,11 @@ import 'package:flutter_loja_online/datas/cart_product.dart';
 import 'package:flutter_loja_online/datas/product_data.dart';
 import 'package:flutter_loja_online/models/cart_model.dart';
 
-class CartTileProduct extends StatelessWidget {
+class CartProductTile extends StatelessWidget {
   final CartProduct _cartProduct;
   final cardKey = GlobalKey();
 
-  CartTileProduct(this._cartProduct);
+  CartProductTile(this._cartProduct);
 
   @override
   Widget build(BuildContext context) {
@@ -42,6 +42,8 @@ class CartTileProduct extends StatelessWidget {
   }
 
   Widget _buildContent(BuildContext context) {
+    CartModel.of(context).updateCartSummaryPrices();
+
     return Row(
       children: <Widget>[
         Container(

@@ -89,7 +89,7 @@ class CartScreen extends StatelessWidget {
               children: <Widget>[
                 Column(
                   children: cartModel.products.map((product) {
-                    return CartTileProduct(product);
+                    return CartProductTile(product);
                   }).toList(),
                 ),
                 DiscountCard(),

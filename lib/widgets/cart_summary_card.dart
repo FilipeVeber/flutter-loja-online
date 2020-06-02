@@ -15,6 +15,10 @@ class CartSummaryCard extends StatelessWidget {
         padding: EdgeInsets.all(18),
         child: ScopedModelDescendant<CartModel>(
           builder: (context, child, cartModel) {
+            double productsPrice = cartModel.getProductsPrice();
+            double shipPrice = cartModel.getShipPrice();
+            double discountPrice = cartModel.getDiscountPrice();
+
             return Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: <Widget>[
@@ -30,7 +34,7 @@ class CartSummaryCard extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: <Widget>[
                     Text("Subtotal"),
-                    Text("R\$ 0.00"),
+                    Text("R\$ ${productsPrice.toStringAsFixed(2)}"),
                   ],
                 ),
                 Divider(),
@@ -38,7 +42,13 @@ class CartSummaryCard extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: <Widget>[
                     Text("Descontos"),
-                    Text("R\$ 0.00"),
+                    discountPrice > 0
+                        ? Text(
+                            "R\$ -${discountPrice.toStringAsFixed(2)}",
+                            style:
+                                TextStyle(color: Theme.of(context).errorColor),
+                          )
+                        : Text("R\$ ${discountPrice.toStringAsFixed(2)}"),
                   ],
                 ),
                 Divider(),
@@ -46,7 +56,7 @@ class CartSummaryCard extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: <Widget>[
                     Text("Frete"),
-                    Text("R\$ 0.00"),
+                    Text("R\$ ${shipPrice.toStringAsFixed(2)}"),
                   ],
                 ),
                 Divider(),
@@ -61,7 +71,7 @@ class CartSummaryCard extends StatelessWidget {
                       style: TextStyle(fontWeight: FontWeight.w500),
                     ),
                     Text(
-                      "R\$ 0.00",
+                      "R\$ ${(productsPrice + shipPrice - discountPrice).toStringAsFixed(2)}",
                       style: TextStyle(
                           color: Theme.of(context).primaryColor, fontSize: 16),
                     ),
