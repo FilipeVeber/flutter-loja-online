@@ -17,7 +17,6 @@ class HomeTab extends StatelessWidget {
               elevation: 8,
               flexibleSpace: FlexibleSpaceBar(
                 title: const Text("Novidades"),
-                centerTitle: true,
               ),
             ),
             FutureBuilder<QuerySnapshot>(

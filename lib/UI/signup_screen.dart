@@ -18,7 +18,6 @@ class SignUpScreen extends StatelessWidget {
       key: _scaffoldKey,
       appBar: AppBar(
         title: Text("Criar conta"),
-        centerTitle: true,
       ),
       body: ScopedModelDescendant<UserModel>(
         builder: (context, child, userModel) {

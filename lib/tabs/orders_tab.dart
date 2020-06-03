@@ -13,5 +13,7 @@ class OrdersTab extends StatelessWidget {
     }
   }
 
-  _buildOrdersContent(BuildContext context) {}
+  _buildOrdersContent(BuildContext context) {
+    return Container();
+  }
 }

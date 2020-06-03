@@ -15,7 +15,6 @@ class CartScreen extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: Text("Meu carrinho"),
-        centerTitle: true,
         actions: <Widget>[
           Container(
             alignment: Alignment.center,

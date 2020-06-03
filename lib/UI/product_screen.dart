@@ -29,7 +29,6 @@ class _ProductScreenState extends State<ProductScreen> {
     return Scaffold(
       appBar: AppBar(
         title: Text(_product.title),
-        centerTitle: true,
       ),
       body: ListView(
         children: <Widget>[

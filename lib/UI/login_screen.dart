@@ -16,7 +16,6 @@ class LoginScreen extends StatelessWidget {
       key: _scaffoldKey,
       appBar: AppBar(
         title: Text("Entrar"),
-        centerTitle: true,
         actions: <Widget>[
           FlatButton(
             child: Text(
