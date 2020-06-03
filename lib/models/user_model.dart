@@ -36,17 +36,12 @@ class UserModel extends Model {
       await _loadCurrentUser();
 
       onSuccess();
-
-      isLoading = false;
-      notifyListeners();
     }).catchError((e) {
       onFail();
+    }).whenComplete(() {
       isLoading = false;
       notifyListeners();
     });
-
-    isLoading = false;
-    notifyListeners();
   }
 
   void signUp(
@@ -66,12 +61,9 @@ class UserModel extends Model {
       await _saveUserData(userData);
 
       onSuccess();
-
-      isLoading = false;
-      notifyListeners();
     }).catchError((error) {
       onFail();
-
+    }).whenComplete(() {
       isLoading = false;
       notifyListeners();
     });

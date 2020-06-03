@@ -109,14 +109,14 @@ class LoginScreen extends StatelessWidget {
                       textColor: Colors.white,
                       color: Theme.of(context).primaryColor,
                       onPressed: () {
-                        if (_formKey.currentState.validate()) {}
-
-                        model.signIn(
-                          email: _emailController.text,
-                          password: _passwordController.text,
-                          onSuccess: _onSuccess,
-                          onFail: _onFail,
-                        );
+                        if (_formKey.currentState.validate()) {
+                          model.signIn(
+                            email: _emailController.text,
+                            password: _passwordController.text,
+                            onSuccess: () => _onSuccess(context),
+                            onFail: () => _onFail(context),
+                          );
+                        }
                       },
                     ),
                   )
@@ -129,14 +129,14 @@ class LoginScreen extends StatelessWidget {
     );
   }
 
-  void _onSuccess() {
-    Navigator.of(_scaffoldKey.currentContext).pop();
+  void _onSuccess(BuildContext context) {
+    Navigator.of(context).pop();
   }
 
-  void _onFail() {
+  void _onFail(BuildContext context) {
     _showSnackBarMessage(
         message: "Falha ao entrar!",
-        backgroundColor: Theme.of(_scaffoldKey.currentContext).errorColor);
+        backgroundColor: Theme.of(context).errorColor);
   }
 
   void _showSnackBarMessage(

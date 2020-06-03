@@ -95,6 +95,16 @@ class CartModel extends Model {
     notifyListeners();
   }
 
+  double _productsPrice = 0;
+
+  void _calculateProductsPrice() {
+    for (CartProduct cartProduct in products) {
+      if (cartProduct.productData != null) {
+        _productsPrice += cartProduct.quantity * cartProduct.productData.price;
+      }
+    }
+  }
+
   double getProductsPrice() {
     double productsPrice = 0;
 

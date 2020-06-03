@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_loja_online/UI/order_screen.dart';
 import 'package:flutter_loja_online/models/cart_model.dart';
 import 'package:flutter_loja_online/models/user_model.dart';
 import 'package:flutter_loja_online/tiles/cart_product_tile.dart';
@@ -98,6 +99,8 @@ class CartScreen extends StatelessWidget {
                   String orderId = await cartModel.finishOrder();
                   if (orderId != null) {
                     print("Order ID: $orderId");
+                    Navigator.of(context).pushReplacement(MaterialPageRoute(
+                        builder: (context) => OrderScreen(orderId)));
                   }
                 }),
               ],
