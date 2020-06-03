@@ -5,10 +5,9 @@ import 'package:flutter_loja_online/models/user_model.dart';
 import 'package:flutter_loja_online/tiles/cart_product_tile.dart';
 import 'package:flutter_loja_online/widgets/cart_summary_card.dart';
 import 'package:flutter_loja_online/widgets/discount_card.dart';
+import 'package:flutter_loja_online/widgets/logged_out_warning.dart';
 import 'package:flutter_loja_online/widgets/ship_card.dart';
 import 'package:scoped_model/scoped_model.dart';
-
-import 'login_screen.dart';
 
 class CartScreen extends StatelessWidget {
   @override
@@ -36,46 +35,8 @@ class CartScreen extends StatelessWidget {
               child: CircularProgressIndicator(),
             );
           } else if (!UserModel.of(context).isLoggedIn()) {
-            return Container(
-              padding: EdgeInsets.all(16),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.stretch,
-                children: <Widget>[
-                  Icon(
-                    Icons.remove_shopping_cart,
-                    size: 80,
-                    color: Theme.of(context).primaryColor,
-                  ),
-                  SizedBox(
-                    height: 16,
-                  ),
-                  Text(
-                    "Faça o login para adicionar produtos",
-                    style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-                    textAlign: TextAlign.center,
-                  ),
-                  SizedBox(
-                    height: 16,
-                  ),
-                  SizedBox(
-                    height: 44,
-                    child: RaisedButton(
-                      child: Text(
-                        "Entrar",
-                        style: TextStyle(fontSize: 18),
-                      ),
-                      textColor: Colors.white,
-                      color: Theme.of(context).primaryColor,
-                      onPressed: () {
-                        Navigator.of(context).push(MaterialPageRoute(
-                            builder: (context) => LoginScreen()));
-                      },
-                    ),
-                  )
-                ],
-              ),
-            );
+            return LoggedOutWarning("Faça o login para adicionar produtos",
+                Icons.remove_shopping_cart);
           } else if (cartModel.products == null ||
               cartModel.products.length == 0) {
             return Center(
