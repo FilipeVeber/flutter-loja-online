@@ -84,7 +84,7 @@ class CartSummaryCard extends StatelessWidget {
                   child: Text("Finalizar pedido"),
                   color: Theme.of(context).primaryColor,
                   textColor: Colors.white,
-                  onPressed: () {},
+                  onPressed: finishOrder,
                 )
               ],
             );

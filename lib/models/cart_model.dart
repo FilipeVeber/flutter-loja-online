@@ -92,7 +92,7 @@ class CartModel extends Model {
   }
 
   void updateCartSummaryPrices() {
-    notifyListeners();
+//    notifyListeners();
   }
 
   double _productsPrice = 0;
