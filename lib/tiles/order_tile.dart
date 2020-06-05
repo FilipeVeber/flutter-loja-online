@@ -26,6 +26,8 @@ class OrderTile extends StatelessWidget {
                 );
               }
 
+              int status = snapshot.data["status"];
+
               return Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
@@ -42,6 +44,27 @@ class OrderTile extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.stretch,
                       children: [
                         Text(_buildProductsInfo(snapshot.data)),
+                        SizedBox(
+                          height: 18,
+                        ),
+                        Text(
+                          "Status:",
+                          style: TextStyle(fontWeight: FontWeight.bold),
+                        ),
+                        SizedBox(
+                          height: 4,
+                        ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+//                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                          children: <Widget>[
+                            _buildCircleStatus(1, "1", "Preparaçao", status),
+                            _buildDivider(),
+                            _buildCircleStatus(2, "2", "Transporte", status),
+                            _buildDivider(),
+                            _buildCircleStatus(3, "3", "Entrega", status),
+                          ],
+                        ),
                       ],
                     ),
                   )
@@ -62,5 +85,58 @@ class OrderTile extends StatelessWidget {
     info += "Total: R\$ ${snapshot.data["totalPrice"].toString()}";
 
     return info;
+  }
+
+  Widget _buildCircleStatus(
+      int position, String title, String subtitle, int status) {
+    Color backgroundColor;
+    Widget child;
+
+    if (status < position) {
+      backgroundColor = Colors.grey[500];
+      child = Text(
+        title,
+        style: TextStyle(color: Colors.white),
+      );
+    } else if (status == position) {
+      backgroundColor = Colors.blue;
+      child = Stack(
+        alignment: Alignment.center,
+        children: <Widget>[
+          Text(
+            title,
+            style: TextStyle(color: Colors.white),
+          ),
+          CircularProgressIndicator(
+            valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
+          )
+        ],
+      );
+    } else {
+      backgroundColor = Colors.green;
+      child = Icon(
+        Icons.check,
+        color: Colors.white,
+      );
+    }
+
+    return Column(
+      children: <Widget>[
+        CircleAvatar(
+          radius: 20,
+          backgroundColor: backgroundColor,
+          child: child,
+        ),
+        Text(subtitle)
+      ],
+    );
+  }
+
+  Widget _buildDivider() {
+    return Container(
+      height: 2,
+      width: 40,
+      color: Colors.grey[500],
+    );
   }
 }
